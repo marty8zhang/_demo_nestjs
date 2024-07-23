@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "23b486cd-cea2-42e3-b86a-66cde0426d48",
+		"name": "_demo_nestjs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5219325"
+	},
+	"item": [
+		{
+			"name": "cats",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Doc\",\r\n    \"age\": 3,\r\n    \"breed\": \"Egyptian Mau\",\r\n    \"non-whitelisted-property-one\": \"This field should be filtered out from the request and the respnose.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/cats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cats/generate-name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/cats/generate-name",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cats",
+						"generate-name"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
