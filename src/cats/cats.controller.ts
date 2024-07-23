@@ -10,14 +10,23 @@ import {
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { AnimalsService } from '../animals/animals.service';
 
 @Controller('cats')
 export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+  constructor(
+    private readonly catsService: CatsService,
+    private readonly animalsService: AnimalsService,
+  ) {}
 
   @Post()
   create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
+  }
+
+  @Get('generate-name')
+  generateName(): string {
+    return this.animalsService.generateName();
   }
 
   @Get()
