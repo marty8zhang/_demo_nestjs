@@ -24,14 +24,14 @@ export class CatsController {
     return this.catsService.create(createCatDto);
   }
 
-  @Get('generate-name')
-  generateName(): string {
-    return this.animalsService.generateName();
-  }
-
   @Get()
   findAll() {
     return this.catsService.findAll();
+  }
+
+  @Get('generate-name')
+  generateName(): string {
+    return this.animalsService.generateName();
   }
 
   @Get(':id')
