@@ -17,7 +17,7 @@ export class CatsService {
   }
 
   update(id: number, updateCatDto: UpdateCatDto) {
-    return `This action updates a #${id} cat`;
+    return `This action updates a #${id} cat with ${JSON.stringify(updateCatDto)}.`;
   }
 
   remove(id: number) {
