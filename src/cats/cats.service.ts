@@ -40,7 +40,7 @@ export class CatsService {
       {
         cause: new Error(),
         description:
-          'This optional `cause` object can provide additional error information to the response body as an `Error` attribute.',
+          'This optional `cause` object can provide additional error information to the response body as an `error` attribute.',
       },
       // 'As an alternative to the `cause` object, this optional string is the other way to provide additional error information to the response body as an `error` attribute.'
     );

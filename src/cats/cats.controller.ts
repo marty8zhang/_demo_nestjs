@@ -6,13 +6,17 @@ import {
   Patch,
   Param,
   Delete,
+  // UseFilters,
 } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
 import { AnimalsService } from '../animals/animals.service';
+// import { HttpExceptionFilter } from '../common/exceptions/filters/http-exception.filter';
 
 @Controller('cats')
+// Apply exception filter(s) in the controller scope.
+// @UseFilters(HttpExceptionFilter, ...)
 export class CatsController {
   constructor(
     private readonly catsService: CatsService,
@@ -24,6 +28,8 @@ export class CatsController {
     return this.catsService.create(createCatDto);
   }
 
+  // Apply exception filter(s) in the method scope.
+  // @UseFilters(HttpExceptionFilter, ...)
   @Get()
   findAll() {
     return this.catsService.findAll();
