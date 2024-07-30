@@ -120,6 +120,18 @@
 							"path": [
 								"cats",
 								"generate-name"
+							],
+							"query": [
+								{
+									"key": "genderNeutral",
+									"value": "false",
+									"disabled": true
+								},
+								{
+									"key": "numberOfNames",
+									"value": "3",
+									"disabled": true
+								}
 							]
 						}
 					},

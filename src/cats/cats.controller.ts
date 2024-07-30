@@ -8,6 +8,9 @@ import {
   Delete,
   ParseIntPipe,
   HttpStatus,
+  Query,
+  DefaultValuePipe,
+  ParseBoolPipe,
   // UsePipes,
   // UseFilters,
 } from '@nestjs/common';
@@ -32,7 +35,9 @@ export class CatsController {
     return this.catsService.create(createCatDto);
   }
 
-  // Apply exception filter(s) in the method scope.
+  /*
+   * Apply exception filter(s) in the method scope.
+   */
   // @UseFilters(HttpExceptionFilter, ...)
   @Get()
   findAll() {
@@ -40,8 +45,16 @@ export class CatsController {
   }
 
   @Get('generate-name')
-  generateName(): string {
-    return this.animalsService.generateName();
+  generateName(
+    @Query('genderNeutral', new DefaultValuePipe(true), ParseBoolPipe)
+    genderNeutral: boolean,
+    @Query('numberOfNames', new DefaultValuePipe(1), ParseIntPipe)
+    numberOfNames: number,
+  ): string {
+    return this.animalsService.generateName({
+      genderNeutral,
+      numberOfNames,
+    });
   }
 
   @Get(':id')
