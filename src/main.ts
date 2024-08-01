@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
 import { BaseExceptionFilter } from './common/exceptions/filters/base-exception.filter';
+import { ExecutionTimeLoggerInterceptor } from './common/interceptors/execution-time-logger.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +18,8 @@ async function bootstrap() {
     new BaseExceptionFilter(app.get(HttpAdapterHost)),
     new HttpExceptionFilter(),
   );
+
+  app.useGlobalInterceptors(new ExecutionTimeLoggerInterceptor());
 
   app.useGlobalPipes(
     new ValidationPipe({
