@@ -11,6 +11,7 @@ import {
   Query,
   DefaultValuePipe,
   ParseBoolPipe,
+  UseInterceptors,
   // UsePipes,
   // UseFilters,
 } from '@nestjs/common';
@@ -19,6 +20,7 @@ import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto, updateCatSchema } from './dto/update-cat.dto';
 import { AnimalsService } from '../animals/animals.service';
 import { SchemaValidationPipe } from '../common/pipes/schema-validation.pipe';
+import { ResponseMappingInterceptor } from '../common/interceptors/response-mapping.interceptor';
 // import { HttpExceptionFilter } from '../common/exceptions/filters/http-exception.filter';
 
 @Controller('cats')
@@ -58,6 +60,7 @@ export class CatsController {
   }
 
   @Get(':id')
+  @UseInterceptors(ResponseMappingInterceptor)
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.findOne(id);
   }
