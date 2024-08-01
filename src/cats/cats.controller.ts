@@ -21,6 +21,7 @@ import { UpdateCatDto, updateCatSchema } from './dto/update-cat.dto';
 import { AnimalsService } from '../animals/animals.service';
 import { SchemaValidationPipe } from '../common/pipes/schema-validation.pipe';
 import { ResponseMappingInterceptor } from '../common/interceptors/response-mapping.interceptor';
+import { CachingInterceptor } from '../common/interceptors/caching.interceptor';
 // import { HttpExceptionFilter } from '../common/exceptions/filters/http-exception.filter';
 
 @Controller('cats')
@@ -87,6 +88,7 @@ export class CatsController {
   }
 
   @Delete(':id')
+  @UseInterceptors(CachingInterceptor)
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.catsService.remove(id);
   }
