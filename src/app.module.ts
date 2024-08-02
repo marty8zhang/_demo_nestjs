@@ -14,6 +14,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 // import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
+import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
 
 @Module({
   imports: [CatsModule, AnimalsModule, AuthenticationModule, UsersModule],
@@ -54,5 +55,12 @@ export class AppModule implements NestModule {
         '/',
         // ...
       );
+    consumer
+      .apply(AuthenticationMiddleware)
+      .exclude(
+        { path: 'authentication/sign-in', method: RequestMethod.POST },
+        { path: 'test-base-exception-filter', method: RequestMethod.GET },
+      )
+      .forRoutes('/');
   }
 }

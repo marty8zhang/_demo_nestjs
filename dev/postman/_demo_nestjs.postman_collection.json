@@ -49,6 +49,26 @@
 					"response": []
 				},
 				{
+					"name": "cats/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/cats/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"cats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "cats",
 					"request": {
 						"method": "POST",
@@ -140,8 +160,60 @@
 			]
 		},
 		{
+			"name": "authentication",
+			"item": [
+				{
+					"name": "sign-in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"_demo-nestjs-token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jane.roe@example.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/authentication/sign-in",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"authentication",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "test-base-exception-filter",
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -157,6 +229,44 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{_demo-nestjs-token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "_demo-nestjs-token",
+			"value": ""
 		}
 	]
 }
