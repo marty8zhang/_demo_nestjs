@@ -12,9 +12,11 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 // import { APP_FILTER } from '@nestjs/core';
 // import { BaseExceptionFilter } from './common/exceptions/filters/base-exception.filter';
 // import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [CatsModule, AnimalsModule],
+  imports: [CatsModule, AnimalsModule, AuthenticationModule, UsersModule],
   controllers: [AppController],
   providers: [
     AppService,
