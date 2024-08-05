@@ -15,9 +15,16 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [CatsModule, AnimalsModule, AuthenticationModule, UsersModule],
+  imports: [
+    CatsModule,
+    AnimalsModule,
+    AuthenticationModule,
+    UsersModule,
+    ConfigModule.forRoot(),
+  ],
   controllers: [AppController],
   providers: [
     AppService,

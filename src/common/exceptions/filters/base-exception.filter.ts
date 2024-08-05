@@ -18,16 +18,14 @@ export class BaseExceptionFilter implements ExceptionFilter {
   // (`Request` and `Response`) directly.
   catch(exception: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;
-
     const ctx = host.switchToHttp();
-
     const httpStatus =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-
     const responseBody = {
       statusCode: httpStatus,
+      error: (exception as Error).message,
       isFromBaseExceptionFilter: true,
       requestPath: httpAdapter.getRequestUrl(ctx.getRequest()),
     };
