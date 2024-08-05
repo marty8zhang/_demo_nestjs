@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 export enum UserRole {
-  Administrator,
-  User,
+  Administrator = 0,
+  User = 1,
 }
 
 export type User = {

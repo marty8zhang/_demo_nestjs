@@ -209,6 +209,31 @@
 			]
 		},
 		{
+			"name": "users",
+			"item": [
+				{
+					"name": "current-user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/current",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "test-base-exception-filter",
 			"request": {
 				"auth": {
