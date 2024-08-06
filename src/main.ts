@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
 import { BaseExceptionFilter } from './common/exceptions/filters/base-exception.filter';
 import { ExecutionTimeLoggerInterceptor } from './common/interceptors/execution-time-logger.interceptor';
+// import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,6 +27,13 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+
+  /*
+   * The below lines demonstrate how the `ConfigService` can be used in
+   * `main.ts`.
+   */
+  // const configService = app.get(ConfigService);
+  // const port = configService.get('PORT');
 
   await app.listen(3000);
 }

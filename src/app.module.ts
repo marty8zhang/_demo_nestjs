@@ -23,7 +23,10 @@ import { ConfigModule } from '@nestjs/config';
     AnimalsModule,
     AuthenticationModule,
     UsersModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      /* Improve performance by skipping further `process.env` access. */
+      cache: true,
+    }),
   ],
   controllers: [AppController],
   providers: [
