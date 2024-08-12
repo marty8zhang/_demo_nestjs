@@ -1,4 +1,4 @@
-import { UserRole } from '../users.service';
+import { UserRole } from './user.entity';
 
 export class CurrentUser {
   sub: number;
