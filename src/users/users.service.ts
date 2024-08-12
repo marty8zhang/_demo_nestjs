@@ -1,18 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 export enum UserRole {
   Administrator = 0,
   User = 1,
 }
-
-export type User = {
-  id: number;
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  roles: UserRole[];
-};
 
 @Injectable()
 export class UsersService {
@@ -35,9 +29,28 @@ export class UsersService {
     },
   ];
 
-  async findByEmail(email: string): Promise<User | undefined> {
-    return this.users.find(
-      (user) => user.email.toLowerCase() === email.toLowerCase(),
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
+  async findByEmail(email: string): Promise<User | null> {
+    return (
+      this.users.find(
+        (user) => user.email.toLowerCase() === email.toLowerCase(),
+      ) ?? null
     );
+  }
+
+  async findById(id: number): Promise<User | null> {
+    return this.usersRepository.findOneBy({ id });
+  }
+
+  async removeById(id: number): Promise<void> {
+    if (!(await this.findById(id))) {
+      throw new NotFoundException(`User with id \`${id}\` not found`);
+    }
+
+    await this.usersRepository.delete(id);
   }
 }

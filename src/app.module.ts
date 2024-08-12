@@ -16,6 +16,8 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -26,6 +28,21 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({
       /* Improve performance by skipping further `process.env` access. */
       cache: true,
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'postgres',
+      database: '_demo_nestjs',
+      entities: [User],
+      /*
+       * Auto creates database schema on application launch. DON'T ENABLE IT
+       * IN PRODUCTION.
+       */
+      synchronize: true,
+      logging: true,
     }),
   ],
   controllers: [AppController],

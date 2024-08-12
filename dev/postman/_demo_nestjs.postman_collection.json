@@ -10,7 +10,7 @@
 			"name": "cats",
 			"item": [
 				{
-					"name": "cats",
+					"name": "/",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -29,7 +29,7 @@
 					"response": []
 				},
 				{
-					"name": "cats/:id",
+					"name": ":id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -49,7 +49,7 @@
 					"response": []
 				},
 				{
-					"name": "cats/:id",
+					"name": ":id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -69,7 +69,7 @@
 					"response": []
 				},
 				{
-					"name": "cats",
+					"name": "/",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -97,7 +97,7 @@
 					"response": []
 				},
 				{
-					"name": "cats",
+					"name": ":id",
 					"request": {
 						"method": "PATCH",
 						"header": [],
@@ -126,7 +126,7 @@
 					"response": []
 				},
 				{
-					"name": "cats/generate-name",
+					"name": "generate-name",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -212,7 +212,7 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "current-user",
+					"name": "current",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -226,6 +226,46 @@
 							"path": [
 								"users",
 								"current"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"1"
 							]
 						}
 					},
