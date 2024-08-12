@@ -232,6 +232,34 @@
 					"response": []
 				},
 				{
+					"name": "/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john.doe@example.com\",\r\n    \"password\": \"123456\",\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"roles\": [\"USER\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": ":id",
 					"request": {
 						"method": "GET",
@@ -246,6 +274,25 @@
 							"path": [
 								"users",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
 							]
 						}
 					},

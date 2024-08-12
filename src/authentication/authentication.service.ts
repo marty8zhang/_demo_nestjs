@@ -10,8 +10,8 @@ export class AuthenticationService {
   ) {}
 
   async signIn(email: string, password: string): Promise<any> {
-    const user = await this.userService.findByEmail(email);
-    if (user?.password !== password) {
+    const user = await this.userService.findOneByEmail(email);
+    if (user?.password !== Buffer.from(password).toString('base64')) {
       throw new UnauthorizedException();
     }
 
