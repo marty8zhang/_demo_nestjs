@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User, UserRole } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -42,10 +42,6 @@ export class UsersService {
   }
 
   async removeById(id: number): Promise<void> {
-    if (!(await this.findById(id))) {
-      throw new NotFoundException(`User with id \`${id}\` not found`);
-    }
-
     await this.usersRepository.delete(id);
   }
 }

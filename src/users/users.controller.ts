@@ -34,6 +34,10 @@ export class UsersController {
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
+    if (!this.usersService.findById(id)) {
+      throw new NotFoundException(`User with id \`${id}\` not found`);
+    }
+
     return this.usersService.removeById(id);
   }
 }
