@@ -7,7 +7,7 @@ import { UserRolesService } from './user-roles.service';
 import { UserRole } from './entities/user-role.entity';
 
 @Module({
-  /* Use `TypeOrmModule.forFeature()` to register entity repositories. */
+  /* Use `TypeOrmModule.forFeature()` to register entities. */
   imports: [TypeOrmModule.forFeature([User, UserRole])],
   providers: [UsersService, UserRolesService],
   controllers: [UsersController],

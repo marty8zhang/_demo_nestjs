@@ -17,8 +17,6 @@ import { UsersModule } from './users/users.module';
 import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/entities/user.entity';
-import { UserRole } from './users/entities/user-role.entity';
 
 @Module({
   imports: [
@@ -37,7 +35,13 @@ import { UserRole } from './users/entities/user-role.entity';
       username: 'postgres',
       password: 'postgres',
       database: '_demo_nestjs',
-      entities: [User, UserRole],
+      /*
+       * With `autoLoadEntities`, every entity registered through `forFeature()`
+       * will be automatically added to the `entities` array of the
+       * configuration object of `forRoot()`.
+       */
+      // entities: [User, UserRole],
+      autoLoadEntities: true,
       /*
        * Auto creates database schema on application launch. DON'T ENABLE IT
        * IN PRODUCTION.
