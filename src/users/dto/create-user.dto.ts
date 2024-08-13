@@ -1,4 +1,10 @@
-import { ArrayUnique, IsEmail, IsEnum, IsString } from 'class-validator';
+import {
+  ArrayNotEmpty,
+  ArrayUnique,
+  IsEmail,
+  IsEnum,
+  IsString,
+} from 'class-validator';
 import { UserRoleValue } from '../entities/user-role.entity';
 
 export class CreateUserDto {
@@ -16,5 +22,6 @@ export class CreateUserDto {
 
   @IsEnum(UserRoleValue, { each: true })
   @ArrayUnique()
+  @ArrayNotEmpty()
   roles: UserRoleValue[];
 }

@@ -1,5 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { UserRoleValue } from './user-role.entity';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+} from 'typeorm';
+import { UserRole } from './user-role.entity';
 
 @Entity()
 @Unique(['email'])
@@ -19,6 +26,7 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column({ type: 'simple-array', default: [UserRoleValue.User] })
-  roles: UserRoleValue[];
+  @ManyToMany(() => UserRole)
+  @JoinTable()
+  roles: UserRole[];
 }

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -14,10 +15,14 @@ import { CurrentUser } from './entities/current-user.entity';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
+import { UserRolesService } from './user-roles.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly userRolesService: UserRolesService,
+  ) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
@@ -27,13 +32,23 @@ export class UsersController {
       );
     }
 
-    createUserDto.email = createUserDto.email.toLowerCase();
-    createUserDto.password = Buffer.from(createUserDto.password).toString(
-      'base64',
+    const user = new User();
+    user.email = createUserDto.email.toLowerCase();
+    user.password = Buffer.from(createUserDto.password).toString('base64');
+    user.firstName = createUserDto.firstName;
+    user.lastName = createUserDto.lastName;
+    user.roles = await Promise.all(
+      createUserDto.roles.map(async (value) => {
+        const userRole = await this.userRolesService.findOneByRole(value);
+        if (!userRole) {
+          throw new BadRequestException();
+        }
+
+        return userRole;
+      }),
     );
 
-    const { password, ...userData } =
-      await this.usersService.create(createUserDto);
+    const { password, ...userData } = await this.usersService.create(user);
     return userData;
   }
 

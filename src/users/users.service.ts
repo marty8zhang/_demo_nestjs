@@ -2,59 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserRoleValue } from './entities/user-role.entity';
 
 @Injectable()
 export class UsersService {
-  private readonly users: User[] = [
-    {
-      id: 1,
-      email: 'john.doe@example.com',
-      password: 'MTIzNDU2' /* Hashed from `123456`. */,
-      firstName: 'John',
-      lastName: 'Doe',
-      roles: [UserRoleValue.User],
-    },
-    {
-      id: 2,
-      email: 'jane.roe@example.com',
-      password: 'MTIzNDU2' /* Hashed from `123456`. */,
-      firstName: 'Jane',
-      lastName: 'Roe',
-      roles: [UserRoleValue.Administrator],
-    },
-  ];
-
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private readonly usersRepository: Repository<User>,
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    return this.usersRepository.save(createUserDto);
+  async create(user: User): Promise<User> {
+    return this.usersRepository.save(user);
   }
 
   async findAll(): Promise<User[]> {
-    return this.usersRepository.find();
-  }
-
-  async findOneByEmail(email: string): Promise<User | null> {
-    /*
-     * Keep the below code for now to provide the user data needed for
-     * authentication. It can be safely removed after the database seeding
-     * functionality has been implemented.
-     */
-    return (
-      this.users.find(
-        (user) => user.email.toLowerCase() === email.toLowerCase(),
-      ) ?? null
-    );
-    // return this.usersRepository.findOneBy({ email });
+    return this.usersRepository.find({
+      relations: ['roles'],
+      relationLoadStrategy: 'query',
+    });
   }
 
   async findOneById(id: number): Promise<User | null> {
     return this.usersRepository.findOneBy({ id });
+  }
+
+  async findOneByEmail(email: string): Promise<User | null> {
+    return this.usersRepository.findOneBy({ email: email.toLowerCase() });
   }
 
   async removeById(id: number): Promise<void> {
