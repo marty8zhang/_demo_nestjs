@@ -1,5 +1,5 @@
 import { ArrayUnique, IsEmail, IsEnum, IsString } from 'class-validator';
-import { UserRole } from '../entities/user.entity';
+import { UserRoleValue } from '../entities/user-role.entity';
 
 export class CreateUserDto {
   @IsEmail()
@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsString()
   lastName: string;
 
-  @IsEnum(UserRole, { each: true })
+  @IsEnum(UserRoleValue, { each: true })
   @ArrayUnique()
-  roles: UserRole[];
+  roles: UserRoleValue[];
 }

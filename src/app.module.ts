@@ -18,6 +18,7 @@ import { AuthenticationMiddleware } from './authentication/middleware/authentica
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/entities/user.entity';
+import { UserRole } from './users/entities/user-role.entity';
 
 @Module({
   imports: [
@@ -36,7 +37,7 @@ import { User } from './users/entities/user.entity';
       username: 'postgres',
       password: 'postgres',
       database: '_demo_nestjs',
-      entities: [User],
+      entities: [User, UserRole],
       /*
        * Auto creates database schema on application launch. DON'T ENABLE IT
        * IN PRODUCTION.

@@ -1,7 +1,7 @@
-import { UserRole } from './user.entity';
+import { UserRoleValue } from './user-role.entity';
 
 export class CurrentUser {
   sub: number;
   email: string;
-  roles: UserRole[];
+  roles: UserRoleValue[];
 }
