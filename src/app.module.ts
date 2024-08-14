@@ -15,7 +15,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { UsersModule } from './users/users.module';
 import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
@@ -28,26 +28,30 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       /* Improve performance by skipping further `process.env` access. */
       cache: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: '_demo_nestjs',
-      /*
-       * With `autoLoadEntities`, every entity registered through `forFeature()`
-       * will be automatically added to the `entities` array of the
-       * configuration object of `forRoot()`.
-       */
-      // entities: [User, UserRole],
-      autoLoadEntities: true,
-      /*
-       * Auto creates database schema on application launch. DON'T ENABLE IT
-       * IN PRODUCTION.
-       */
-      synchronize: true,
-      logging: true,
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: config.get<string>('POSTGRES_USERNAME'),
+        password: config.get<string>('POSTGRES_PASSWORD'),
+        database: config.get<string>('POSTGRES_DATABASE'),
+        /*
+         * With `autoLoadEntities`, every entity registered through `forFeature()`
+         * will be automatically added to the `entities` array of the
+         * configuration object of `forRoot()`.
+         */
+        // entities: [User, UserRole],
+        autoLoadEntities: true,
+        /*
+         * Auto creates database schema on application launch. DON'T ENABLE IT
+         * IN PRODUCTION.
+         */
+        synchronize: true,
+        logging: true,
+      }),
     }),
   ],
   controllers: [AppController],
