@@ -17,6 +17,7 @@ import { UsersModule } from './users/users.module';
 import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -51,6 +52,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
          */
         synchronize: true,
         logging: true,
+      }),
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@localhost:27017/`,
       }),
     }),
   ],

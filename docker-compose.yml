@@ -11,5 +11,32 @@ services:
             POSTGRES_DB: ${POSTGRES_DATABASE:-_demo_nestjs}
         networks:
             - network_demo_nestjs
+
+    database_mongo:
+        image: mongo:7-jammy
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME:-mongo}
+            MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-mongo}
+            MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-_demo_nestjs}
+        networks:
+            - network_demo_nestjs
+        volumes:
+            - ./dev/database-mongo/docker-entrypoint-initdb.d/:/docker-entrypoint-initdb.d:ro
+    database_mongo_express:
+        image: mongo-express:1-20-alpine3.19
+        ports:
+            - "8081:8081"
+        environment:
+            ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USERNAME:-mongo}
+            ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD:-mongo}
+            ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USERNAME:-mongo}:${MONGO_PASSWORD:-mongo}@database_mongo:27017/
+            ME_CONFIG_BASICAUTH: false
+        networks:
+            - network_demo_nestjs
+        depends_on:
+            - database_mongo
+
 networks:
     network_demo_nestjs:
