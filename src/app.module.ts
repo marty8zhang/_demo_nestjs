@@ -18,6 +18,7 @@ import { AuthenticationMiddleware } from './authentication/middleware/authentica
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
+import { NotesModule } from './notes/notes.module';
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
         type: 'postgres',
-        host: 'localhost',
+        host: config.get<string>('POSTGRES_HOST'),
         port: 5432,
         username: config.get<string>('POSTGRES_USERNAME'),
         password: config.get<string>('POSTGRES_PASSWORD'),
@@ -58,9 +59,10 @@ import { MongooseModule } from '@nestjs/mongoose';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@localhost:27017/`,
+        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@${config.get<string>('MONGO_HOST')}:27017/${config.get<string>('MONGO_DATABASE')}?authSource=admin`,
       }),
     }),
+    NotesModule,
   ],
   controllers: [AppController],
   providers: [

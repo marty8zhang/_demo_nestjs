@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
 import { BaseExceptionFilter } from './common/exceptions/filters/base-exception.filter';
 import { ExecutionTimeLoggerInterceptor } from './common/interceptors/execution-time-logger.interceptor';
+import mongoose from 'mongoose';
 // import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
@@ -34,6 +35,8 @@ async function bootstrap() {
    */
   // const configService = app.get(ConfigService);
   // const port = configService.get('PORT');
+
+  mongoose.set('debug', true);
 
   await app.listen(3000);
 }
