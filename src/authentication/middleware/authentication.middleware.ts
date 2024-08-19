@@ -22,7 +22,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
   async use(req: RequestWithCurrentUser, res: Response, next: NextFunction) {
     const token = this.extractToken(req);
     if (!token) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Access token missing.');
     }
 
     try {
@@ -30,7 +30,7 @@ export class AuthenticationMiddleware implements NestMiddleware {
         secret: this.config.get<string>('ACCESS_TOKEN_SECRET'),
       });
     } catch {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Access token invalid.');
     }
 
     next();
