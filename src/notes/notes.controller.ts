@@ -34,7 +34,7 @@ export class NotesController {
     note.author = createNoteDto.author;
     note.tags = createNoteDto.tags;
 
-    return this.notesService.create(createNoteDto);
+    return this.notesService.create(note);
   }
 
   @Get()
@@ -49,7 +49,7 @@ export class NotesController {
       throw new NotFoundException(`Note with id \`${id}\` not found.`);
     }
 
-    return this.notesService.findOneById(id);
+    return note;
   }
 
   @Patch(':id')

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Note } from './entities/note.entity';
+import { Note, NoteDocument } from './entities/note.entity';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -10,23 +10,23 @@ export class NotesService {
     private readonly noteRepository: Model<Note>,
   ) {}
 
-  async create(note: Note): Promise<Note> {
+  async create(note: Note): Promise<NoteDocument> {
     return new this.noteRepository(note).save();
   }
 
-  async findAll(): Promise<Note[]> {
+  async findAll(): Promise<NoteDocument[]> {
     return this.noteRepository.find().exec();
   }
 
-  async findOneById(id: string): Promise<Note | null> {
+  async findOneById(id: string): Promise<NoteDocument | null> {
     return this.noteRepository.findById(id).exec();
   }
 
-  async findOneByTitle(title: string): Promise<Note | null> {
+  async findOneByTitle(title: string): Promise<NoteDocument | null> {
     return this.noteRepository.findOne({ title }).exec();
   }
 
-  async update(id: string, note: Partial<Note>): Promise<Note | null> {
+  async update(id: string, note: Partial<Note>): Promise<NoteDocument | null> {
     const result = await this.noteRepository
       .updateOne({ _id: id }, note)
       .exec();

@@ -1,28 +1,45 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { NotesController } from './notes.controller';
 import { NotesService } from './notes.service';
-import { getModelToken } from '@nestjs/mongoose';
 import { Note } from './entities/note.entity';
 
 describe('NotesController', () => {
-  let controller: NotesController;
+  const notesServiceFindOneById = jest.fn();
+
+  let notesController: NotesController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [NotesController],
-      providers: [
-        NotesService,
-        {
-          provide: getModelToken(Note.name),
-          useValue: {},
-        },
-      ],
-    }).compile();
+    })
+      .useMocker((token) => {
+        if (token === NotesService) {
+          return {
+            findOneById: notesServiceFindOneById,
+          };
+        }
+      })
+      .compile();
 
-    controller = module.get<NotesController>(NotesController);
+    notesController = module.get<NotesController>(NotesController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('findOne', () => {
+    it('should return the found note.', async () => {
+      const expectedResult = new Note();
+      notesServiceFindOneById.mockResolvedValue(expectedResult);
+
+      const actualResult = await notesController.findOne('test-id');
+
+      expect(actualResult).toBe(expectedResult);
+    });
+
+    it('should thrown `NotFoundException` when the note does not exist', async () => {
+      notesServiceFindOneById.mockResolvedValue(null);
+
+      expect(
+        async () => await notesController.findOne('test-id'),
+      ).rejects.toThrow('Note with id `test-id` not found.');
+    });
   });
 });
