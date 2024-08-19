@@ -7,67 +7,55 @@
 	},
 	"item": [
 		{
-			"name": "cats",
+			"name": "authentication",
 			"item": [
 				{
-					"name": "/",
+					"name": "sign-in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"access-token\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"jane.roe@example.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3000/cats",
-							"protocol": "http",
+							"raw": "{{base-url}}/authentication/sign-in",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
-								"cats"
+								"authentication",
+								"sign-in"
 							]
 						}
 					},
 					"response": []
-				},
-				{
-					"name": ":id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/cats/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"cats",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": ":id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/cats/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"cats",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "cats",
+			"item": [
 				{
 					"name": "/",
 					"request": {
@@ -83,12 +71,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/cats",
-							"protocol": "http",
+							"raw": "{{base-url}}/cats",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
 								"cats"
 							]
@@ -111,12 +97,63 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/cats/1",
-							"protocol": "http",
+							"raw": "{{base-url}}/cats/1",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
+							"path": [
+								"cats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/cats/1",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"cats",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/cats",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"cats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/cats/1",
+							"host": [
+								"{{base-url}}"
+							],
 							"path": [
 								"cats",
 								"1"
@@ -131,12 +168,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/cats/generate-name",
-							"protocol": "http",
+							"raw": "{{base-url}}/cats/generate-name",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
 								"cats",
 								"generate-name"
@@ -160,77 +195,8 @@
 			]
 		},
 		{
-			"name": "authentication",
-			"item": [
-				{
-					"name": "sign-in",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.collectionVariables.set(\"_demo-nestjs-token\", pm.response.json().access_token);"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"jane.roe@example.com\",\r\n    \"password\": \"123456\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/authentication/sign-in",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"authentication",
-								"sign-in"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "users",
 			"item": [
-				{
-					"name": "current",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/users/current",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"users",
-								"current"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "/",
 					"request": {
@@ -246,12 +212,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/users",
-							"protocol": "http",
+							"raw": "{{base-url}}/users",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users"
 							]
@@ -262,15 +226,13 @@
 				{
 					"name": ":id",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/1",
-							"protocol": "http",
+							"raw": "{{base-url}}/users/1",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users",
 								"1"
@@ -285,14 +247,119 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users",
-							"protocol": "http",
+							"raw": "{{base-url}}/users",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/1",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/users/current",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"users",
+								"current"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"note_id\", pm.response.json()._id);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Test Note One\",\r\n    \"description\": \"Test description of Test Note One\",\r\n    \"content\": \"The main content of Test Note One.\",\r\n    \"author\": \"Marty\",\r\n    \"tags\": [\r\n        \"Software Development\",\r\n        \"Software Engineering\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/notes/",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"notes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Test Note One (updated title)\",\r\n    \"description\": \"Test description of Test Note One\",\r\n    \"content\": \"The main content of Test Note One.\",\r\n    \"author\": \"Marty\",\r\n    \"tags\": [\r\n        \"Rocket Science\"\r\n    ],\r\n    \"ignoredProperty\": \"This property will be ignored because it's not defined in the `Note` entity.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base-url}}/notes/{{note_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"notes",
+								"{{note_id}}"
 							]
 						}
 					},
@@ -304,15 +371,48 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/1",
-							"protocol": "http",
+							"raw": "{{base-url}}/notes/{{note_id}}",
 							"host": [
-								"localhost"
+								"{{base-url}}"
 							],
-							"port": "3000",
 							"path": [
-								"users",
-								"1"
+								"notes",
+								"{{note_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/notes",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": ":id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base-url}}/notes/{{note_id}}",
+							"host": [
+								"{{base-url}}"
+							],
+							"path": [
+								"notes",
+								"{{note_id}}"
 							]
 						}
 					},
@@ -329,12 +429,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/test-base-exception-filter",
-					"protocol": "http",
+					"raw": "{{base-url}}/test-base-exception-filter",
 					"host": [
-						"localhost"
+						"{{base-url}}"
 					],
-					"port": "3000",
 					"path": [
 						"test-base-exception-filter"
 					]
@@ -348,7 +446,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "{{_demo-nestjs-token}}",
+				"value": "{{access-token}}",
 				"type": "string"
 			}
 		]
@@ -377,8 +475,18 @@
 	],
 	"variable": [
 		{
-			"key": "_demo-nestjs-token",
+			"key": "access-token",
 			"value": ""
+		},
+		{
+			"key": "base-url",
+			"value": "http://127.0.0.1:3000",
+			"type": "string"
+		},
+		{
+			"key": "note_id",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
