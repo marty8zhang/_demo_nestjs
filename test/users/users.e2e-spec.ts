@@ -1,7 +1,3 @@
-/*
- * Bypass authentication. Check out `app.e2e-spec.ts` if testing the behaviours
- * of `AuthenticationMiddleware` is desirable.
- */
 import TestAgent from 'supertest/lib/agent';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -14,6 +10,10 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserRole } from '../../src/users/entities/user-role.entity';
 import { userRoleFixtures } from './fixtures/database/user-role-fixtures';
 
+/*
+ * Bypass authentication. Check out `app.e2e-spec.ts` if testing the behaviours
+ * of `AuthenticationMiddleware` is desirable.
+ */
 jest.mock('../../src/authentication/middleware/authentication.middleware');
 
 describe('UsersController (E2E)', () => {

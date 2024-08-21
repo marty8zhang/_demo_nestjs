@@ -1,6 +1,6 @@
 # Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a [NestJS](https://nestjs.com) demo project.
 
 # Installation
 
