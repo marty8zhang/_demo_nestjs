@@ -4,17 +4,21 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
-  Unique,
+  // Unique,
 } from 'typeorm';
 import { UserRole } from './user-role.entity';
 
 @Entity()
-@Unique(['email'])
+/*
+ * Another way of creating a unique key, which is more useful for composite
+ * unique keys, e.g., `@Unique(['firstName', 'lastName'])`.
+ */
+// @Unique(['email'])
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -23,8 +27,8 @@ export class User {
   @Column()
   firstName: string;
 
-  @Column()
-  lastName: string;
+  @Column({ nullable: true })
+  lastName?: string;
 
   @ManyToMany(() => UserRole)
   @JoinTable()

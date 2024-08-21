@@ -15,18 +15,27 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return this.usersRepository.find({
-      relations: ['roles'],
-      relationLoadStrategy: 'query',
-    });
+    return this.usersRepository.find({ relations: ['roles'] });
   }
 
   async findOneById(id: number): Promise<User | null> {
-    return this.usersRepository.findOneBy({ id });
+    return (
+      await this.usersRepository.find({
+        where: { id: id },
+        relations: ['roles'],
+        take: 1,
+      })
+    )[0];
   }
 
   async findOneByEmail(email: string): Promise<User | null> {
-    return this.usersRepository.findOneBy({ email: email.toLowerCase() });
+    return (
+      await this.usersRepository.find({
+        where: { email: email.toLowerCase() },
+        relations: ['roles'],
+        take: 1,
+      })
+    )[0];
   }
 
   async removeById(id: number): Promise<void> {

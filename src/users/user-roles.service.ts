@@ -7,14 +7,14 @@ import { Repository } from 'typeorm';
 export class UserRolesService {
   constructor(
     @InjectRepository(UserRole)
-    private readonly userRoleRepository: Repository<UserRole>,
+    private readonly userRolesRepository: Repository<UserRole>,
   ) {}
 
   async findOneById(id: number): Promise<UserRole | null> {
-    return this.userRoleRepository.findOneBy({ id });
+    return this.userRolesRepository.findOneBy({ id });
   }
 
   async findOneByRole(role: UserRoleValue): Promise<UserRole | null> {
-    return this.userRoleRepository.findOneBy({ role });
+    return this.userRolesRepository.findOneBy({ role });
   }
 }

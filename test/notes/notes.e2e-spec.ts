@@ -6,7 +6,6 @@ import TestAgent from 'supertest/lib/agent';
 import { NoteDocument, Note } from '../../src/notes/entities/note.entity';
 import { Model } from 'mongoose';
 import { configApplication } from '../../src/common/configs/config-application';
-import { CreateNoteDto } from '../../src/notes/dto/create-note.dto';
 
 /*
  * Bypass authentication. Check out `app.e2e-spec.ts` if testing the behaviours
@@ -40,7 +39,7 @@ describe('NotesController (E2E)', () => {
   });
 
   describe('POST /notes', () => {
-    const createNoteDto: CreateNoteDto = {
+    const createNoteRequestBody = {
       title: 'Test Title',
       description: 'Test description of Test Note',
       content: 'The main content of Test Note.',
@@ -51,7 +50,7 @@ describe('NotesController (E2E)', () => {
     describe('`CreateNoteDto` validation', () => {
       it('should reject the request when the mandatory fields are missing', async () => {
         const { title, author, ...createNoteDtoWithoutMandatoryFields } =
-          createNoteDto;
+          createNoteRequestBody;
         const response = await testAgent
           .post('/notes')
           .send(createNoteDtoWithoutMandatoryFields);
@@ -95,17 +94,18 @@ describe('NotesController (E2E)', () => {
         expect(response.body.author).toEqual('Test Author');
 
         const note = (await notesRepository.findOne({
-          title: 'Test Title',
+          _id: response.body._id,
         })) as NoteDocument;
-        expect(note._id).toBeTruthy();
         expect(note.title).toEqual('Test Title');
         expect(note.author).toEqual('Test Author');
       });
     });
 
     it('should reject the request when there is an existing note with the same title', async () => {
-      await new notesRepository(createNoteDto).save();
-      const response = await testAgent.post('/notes').send(createNoteDto);
+      await new notesRepository(createNoteRequestBody).save();
+      const response = await testAgent
+        .post('/notes')
+        .send(createNoteRequestBody);
 
       expect(response.status).toBe(HttpStatus.CONFLICT);
       expect(response.body).toMatchObject({
@@ -119,7 +119,7 @@ describe('NotesController (E2E)', () => {
 
     it('should save the note with all fields provided with valid values', async () => {
       const response = await testAgent.post('/notes').send({
-        ...createNoteDto,
+        ...createNoteRequestBody,
         ...{ invalidField: 'This field should be ignored' },
       });
 
