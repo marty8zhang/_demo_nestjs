@@ -1,5 +1,4 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
 import * as request from 'supertest';
@@ -10,14 +9,14 @@ import { configApplication } from '../../src/common/configs/config-application';
 import { CreateNoteDto } from '../../src/notes/dto/create-note.dto';
 
 /*
- * TODO:
- *  - Override `AuthenticationMiddleware` with [Jest manual mocks](https://jestjs.io/docs/manual-mocks).
+ * Bypass authentication. Check out `app.e2e-spec.ts` if testing the behaviours
+ * of `AuthenticationMiddleware` is desirable.
  */
+jest.mock('../../src/authentication/middleware/authentication.middleware');
 
 describe('NotesController (E2E)', () => {
   let testAgent: TestAgent;
   let app: INestApplication;
-  let jwtService: JwtService;
   let notesRepository: Model<Note>;
 
   beforeEach(async () => {
@@ -30,10 +29,6 @@ describe('NotesController (E2E)', () => {
     await app.init();
 
     testAgent = request(app.getHttpServer());
-
-    /* Bypass authentication - Part 1. */
-    jwtService = module.get<JwtService>(JwtService);
-    jest.spyOn(jwtService, 'verifyAsync').mockResolvedValue({});
 
     /* Clean up database. */
     notesRepository = module.get('NoteModel');
@@ -59,9 +54,7 @@ describe('NotesController (E2E)', () => {
           createNoteDto;
         const response = await testAgent
           .post('/notes')
-          .send(createNoteDtoWithoutMandatoryFields)
-          /* Bypass authentication - Part 2. */
-          .set({ Authorization: 'Bearer valid-access-token' });
+          .send(createNoteDtoWithoutMandatoryFields);
 
         expect(response.status).toBe(HttpStatus.BAD_REQUEST);
         expect(response.body.message).toContain('title should not be empty');
@@ -69,17 +62,13 @@ describe('NotesController (E2E)', () => {
       });
 
       it('should reject the request when the field values are with the wrong types', async () => {
-        const response = await testAgent
-          .post('/notes')
-          .send({
-            title: 123,
-            description: true,
-            content: {},
-            author: undefined,
-            tags: [123, false, 123],
-          })
-          /* Bypass authentication - Part 2. */
-          .set({ Authorization: 'Bearer valid-access-token' });
+        const response = await testAgent.post('/notes').send({
+          title: 123,
+          description: true,
+          content: {},
+          author: undefined,
+          tags: [123, false, 123],
+        });
 
         expect(response.status).toBe(HttpStatus.BAD_REQUEST);
         expect(response.body.message).toContain('title must be a string');
@@ -95,14 +84,10 @@ describe('NotesController (E2E)', () => {
       });
 
       it('should save the note with only mandatory fields', async () => {
-        const response = await testAgent
-          .post('/notes')
-          .send({
-            title: 'Test Title',
-            author: 'Test Author',
-          })
-          /* Bypass authentication - Part 2. */
-          .set({ Authorization: 'Bearer valid-access-token' });
+        const response = await testAgent.post('/notes').send({
+          title: 'Test Title',
+          author: 'Test Author',
+        });
 
         expect(response.status).toBe(HttpStatus.CREATED);
         expect(response.body._id).toBeTruthy();
@@ -120,11 +105,7 @@ describe('NotesController (E2E)', () => {
 
     it('should reject the request when there is an existing note with the same title', async () => {
       await new notesRepository(createNoteDto).save();
-      const response = await testAgent
-        .post('/notes')
-        .send(createNoteDto)
-        /* Bypass authentication - Part 2. */
-        .set({ Authorization: 'Bearer valid-access-token' });
+      const response = await testAgent.post('/notes').send(createNoteDto);
 
       expect(response.status).toBe(HttpStatus.CONFLICT);
       expect(response.body).toMatchObject({
@@ -137,14 +118,10 @@ describe('NotesController (E2E)', () => {
     });
 
     it('should save the note with all fields provided with valid values', async () => {
-      const response = await testAgent
-        .post('/notes')
-        .send({
-          ...createNoteDto,
-          ...{ invalidField: 'This field should be ignored' },
-        })
-        /* Bypass authentication - Part 2. */
-        .set({ Authorization: 'Bearer valid-access-token' });
+      const response = await testAgent.post('/notes').send({
+        ...createNoteDto,
+        ...{ invalidField: 'This field should be ignored' },
+      });
 
       expect(response.status).toBe(HttpStatus.CREATED);
       expect(response.body._id).toBeTruthy();
