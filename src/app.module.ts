@@ -20,6 +20,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { NotesModule } from './notes/notes.module';
 
+const ENV = process.env.NODE_ENV;
+
 @Module({
   imports: [
     CatsModule,
@@ -29,6 +31,7 @@ import { NotesModule } from './notes/notes.module';
     ConfigModule.forRoot({
       /* Improve performance by skipping further `process.env` access. */
       cache: true,
+      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

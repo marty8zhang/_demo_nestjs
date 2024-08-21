@@ -11,7 +11,7 @@ import { CreateNoteDto } from '../../src/notes/dto/create-note.dto';
 
 /*
  * TODO:
- *  - multi `.env` file
+ *  - Override `AuthenticationMiddleware` with [Jest manual mocks](https://jestjs.io/docs/manual-mocks).
  */
 
 describe('NotesController (E2E)', () => {
