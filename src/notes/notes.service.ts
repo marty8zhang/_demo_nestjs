@@ -7,27 +7,27 @@ import { Model } from 'mongoose';
 export class NotesService {
   constructor(
     @InjectModel(Note.name)
-    private readonly noteRepository: Model<Note>,
+    private readonly notesRepository: Model<Note>,
   ) {}
 
   async create(note: Note): Promise<NoteDocument> {
-    return new this.noteRepository(note).save();
+    return new this.notesRepository(note).save();
   }
 
   async findAll(): Promise<NoteDocument[]> {
-    return this.noteRepository.find().exec();
+    return this.notesRepository.find().exec();
   }
 
   async findOneById(id: string): Promise<NoteDocument | null> {
-    return this.noteRepository.findById(id).exec();
+    return this.notesRepository.findById(id).exec();
   }
 
   async findOneByTitle(title: string): Promise<NoteDocument | null> {
-    return this.noteRepository.findOne({ title }).exec();
+    return this.notesRepository.findOne({ title }).exec();
   }
 
   async update(id: string, note: Partial<Note>): Promise<NoteDocument | null> {
-    const result = await this.noteRepository
+    const result = await this.notesRepository
       .updateOne({ _id: id }, note)
       .exec();
     if (!result.matchedCount) {
@@ -38,6 +38,6 @@ export class NotesService {
   }
 
   async remove(id: string): Promise<{ deletedCount: number }> {
-    return this.noteRepository.deleteOne({ _id: id }).exec();
+    return this.notesRepository.deleteOne({ _id: id }).exec();
   }
 }

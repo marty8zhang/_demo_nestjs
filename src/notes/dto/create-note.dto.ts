@@ -24,7 +24,8 @@ export class CreateNoteDto {
   author: string;
 
   @IsOptional()
-  @ArrayUnique()
   @IsArray()
+  @IsString({ each: true })
+  @ArrayUnique()
   tags: string[];
 }

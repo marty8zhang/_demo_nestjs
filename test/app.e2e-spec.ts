@@ -7,7 +7,7 @@ import { BaseExceptionFilter } from '../src/common/exceptions/filters/base-excep
 import { HttpAdapterHost } from '@nestjs/core';
 import { HttpExceptionFilter } from '../src/common/exceptions/filters/http-exception.filter';
 
-describe('AppController (e2e)', () => {
+describe('AppController (E2E)', () => {
   let app: INestApplication;
   let jwtService: JwtService;
 
