@@ -42,7 +42,7 @@ const ENV = process.env.NODE_ENV;
         port: 5432,
         username: config.get<string>('POSTGRES_USERNAME'),
         password: config.get<string>('POSTGRES_PASSWORD'),
-        database: config.get<string>('POSTGRES_DATABASE'),
+        database: config.get<string>('POSTGRES_DBNAME'),
         /*
          * With `autoLoadEntities`, every entity registered through `forFeature()`
          * will be automatically added to the `entities` array of the
@@ -62,7 +62,7 @@ const ENV = process.env.NODE_ENV;
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@${config.get<string>('MONGO_HOST')}:27017/${config.get<string>('MONGO_DATABASE')}?authSource=admin`,
+        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@${config.get<string>('MONGO_HOST')}:${config.get<string>('MONGO_PORT')}/${config.get<string>('MONGO_DBNAME')}?authSource=admin`,
       }),
     }),
     NotesModule,

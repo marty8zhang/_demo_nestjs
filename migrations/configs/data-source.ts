@@ -12,7 +12,7 @@ export const dataSource = new DataSource({
   port: 5432,
   username: `${process.env.POSTGRES_USERNAME}`,
   password: `${process.env.POSTGRES_PASSWORD}`,
-  database: `${process.env.POSTGRES_DATABASE}`,
+  database: `${process.env.POSTGRES_DBNAME}`,
   entities: ['src/**/*.entity{.ts,.js}'],
   migrations: ['migrations/*{.ts,.js}'],
   synchronize: false,
