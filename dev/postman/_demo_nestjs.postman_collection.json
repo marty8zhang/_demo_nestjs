@@ -16,7 +16,7 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.collectionVariables.set(\"access-token\", pm.response.json().access_token);"
+									"pm.collectionVariables.set(\"access-token\", pm.response.json().accessToken);"
 								],
 								"type": "text/javascript",
 								"packages": {}

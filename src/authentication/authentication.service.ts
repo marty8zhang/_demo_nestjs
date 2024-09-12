@@ -21,6 +21,6 @@ export class AuthenticationService {
       roles: user.roles,
     });
     console.log(`Access Token generated: ${accessToken}.`);
-    return { access_token: accessToken };
+    return { accessToken };
   }
 }
