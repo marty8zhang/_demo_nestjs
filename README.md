@@ -57,3 +57,8 @@ $ docker compose --env-file .env.local-testing up -d
 ```bash
 $ pnpm test:e2e
 ```
+
+# API Authentication
+
+API authentication is implemented around `AuthenticationModule`. Check out [the
+Draw.io diagram](docs/authentication.drawio) to see how it works.
