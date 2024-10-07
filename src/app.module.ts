@@ -62,7 +62,11 @@ const ENV = process.env.NODE_ENV;
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => ({
-        uri: `mongodb://${config.get<string>('MONGO_USERNAME')}:${config.get<string>('MONGO_PASSWORD')}@${config.get<string>('MONGO_HOST')}:${config.get<string>('MONGO_PORT')}/${config.get<string>('MONGO_DBNAME')}?authSource=admin`,
+        uri: `mongodb://${config.get<string>('MONGO_HOST')}:${config.get<string>('MONGO_PORT')}`,
+        authSource: 'admin',
+        user: config.get<string>('MONGO_USERNAME'),
+        pass: config.get<string>('MONGO_PASSWORD'),
+        dbName: config.get<string>('MONGO_DBNAME'),
       }),
     }),
     NotesModule,
