@@ -1,6 +1,6 @@
 # Description
 
-This is a [NestJS](https://nestjs.com) demo project.
+This is a [NestJS](https://nestjs.com) backend-only demo project.
 
 # Installation
 
@@ -19,7 +19,6 @@ $ docker compose up -d
 # Development.
 $ pnpm start
 ```
-
 ```bash
 # Watch mode - use SWC (Speedy Web Compiler) to improve the performance.
 $ pnpm start:dev -- -b swc
@@ -29,6 +28,12 @@ $ pnpm start:dev -- -b swc
 # Production mode.
 $ pnpm build && pnpm start:prod
 ```
+
+Once started, the API endpoints can be tested with Postman. A Postman collection
+has been included in `dev/postman/_demo_nestjs.postman_collection.json`. In
+order to log in and obtain an access token before accessing most API endpoints,
+the PostgreSQL database needs to be seeded with user data in
+`dev/database-postgres/*.sql`.
 
 # Running Tests
 
