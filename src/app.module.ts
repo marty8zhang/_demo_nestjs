@@ -19,15 +19,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongooseModule } from '@nestjs/mongoose';
 import { NotesModule } from './notes/notes.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 const ENV = process.env.NODE_ENV;
 
 @Module({
   imports: [
-    CatsModule,
-    AnimalsModule,
-    AuthenticationModule,
-    UsersModule,
     ConfigModule.forRoot({
       /* Improve performance by skipping further `process.env` access. */
       cache: true,
@@ -69,6 +68,15 @@ const ENV = process.env.NODE_ENV;
         dbName: config.get<string>('MONGO_DBNAME'),
       }),
     }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+    }),
+    UsersModule,
+    AuthenticationModule,
+    AnimalsModule,
+    CatsModule,
     NotesModule,
   ],
   controllers: [AppController],
@@ -113,6 +121,11 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'authentication/sign-in', method: RequestMethod.POST },
         { path: 'test-base-exception-filter', method: RequestMethod.GET },
+        /*
+         * TODO: Remove the below line after figuring out how to access the
+         *  GraphQL endpoint with an access token.
+         */
+        { path: 'graphql', method: RequestMethod.ALL },
       )
       .forRoutes('/');
   }

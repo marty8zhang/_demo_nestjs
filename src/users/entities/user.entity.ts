@@ -7,7 +7,9 @@ import {
   // Unique,
 } from 'typeorm';
 import { UserRole } from './user-role.entity';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity()
 /*
  * Another way of creating a unique key, which is more useful for composite
@@ -15,22 +17,31 @@ import { UserRole } from './user-role.entity';
  */
 // @Unique(['email'])
 export class User {
+  @Field(() => Int)
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Field()
   @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
+  @Field()
   @Column()
   firstName: string;
 
+  @Field()
   @Column({ nullable: true })
   lastName?: string;
 
-  @ManyToMany(() => UserRole)
+  @Field(() => [UserRole])
+  /*
+   * The second argument of `@ManyToMany()` specifies the reverse relationship,
+   * which is vital for querying from the non-owner side.
+   */
+  @ManyToMany(() => UserRole, (role) => role.users)
   @JoinTable()
   roles: UserRole[];
 }

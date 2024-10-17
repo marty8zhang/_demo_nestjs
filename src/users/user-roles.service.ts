@@ -10,6 +10,12 @@ export class UserRolesService {
     private readonly userRolesRepository: Repository<UserRole>,
   ) {}
 
+  async findAllByUserId(userId: number): Promise<UserRole[]> {
+    return this.userRolesRepository.find({
+      where: { users: { id: userId } },
+    });
+  }
+
   async findOneById(id: number): Promise<UserRole | null> {
     return this.userRolesRepository.findOneBy({ id });
   }
