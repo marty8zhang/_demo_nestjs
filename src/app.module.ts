@@ -121,11 +121,6 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'authentication/sign-in', method: RequestMethod.POST },
         { path: 'test-base-exception-filter', method: RequestMethod.GET },
-        /*
-         * TODO: Remove the below line after figuring out how to access the
-         *  GraphQL endpoint with an access token.
-         */
-        { path: 'graphql', method: RequestMethod.ALL },
       )
       .forRoutes('/');
   }
