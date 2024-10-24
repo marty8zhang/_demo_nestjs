@@ -7,7 +7,6 @@ export class UserRoleTranslator {
   constructor(private readonly userRolesService: UserRolesService) {}
 
   async valueToObject(value: UserRoleValue): Promise<UserRole> {
-    console.log('this.userRolesService:', this.userRolesService);
     const userRole = await this.userRolesService.findOneByRole(value);
     if (!userRole) {
       throw new Error('An invalid user role has been provided.', {

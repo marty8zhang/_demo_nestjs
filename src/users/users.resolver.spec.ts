@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
 import { UserRolesService } from './user-roles.service';
+import { UserRoleTranslator } from './translators/user-role.translator';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
@@ -16,6 +17,10 @@ describe('UsersResolver', () => {
         },
         {
           provide: UserRolesService,
+          useValue: {},
+        },
+        {
+          provide: UserRoleTranslator,
           useValue: {},
         },
       ],

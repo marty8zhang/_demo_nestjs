@@ -121,6 +121,10 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'authentication/sign-in', method: RequestMethod.POST },
         { path: 'test-base-exception-filter', method: RequestMethod.GET },
+        /*
+         * This enables the public access to the GraphQL Playground UI, yet
+         * still restricts any query/mutation operations with authentication.
+         */
         { path: 'graphql', method: RequestMethod.GET },
       )
       .forRoutes('/');

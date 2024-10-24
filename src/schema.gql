@@ -2,15 +2,26 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  updateUser(updateUserData: UpdateUserInput!): User!
+}
+
 type Query {
   user(id: Int!): User!
+}
+
+input UpdateUserInput {
+  firstName: String
+  id: Int!
+  lastName: String
+  roles: [UserRoleValue]
 }
 
 type User {
   email: String!
   firstName: String!
   id: Int!
-  lastName: String!
+  lastName: String
   roles: [UserRole!]!
 }
 
@@ -18,4 +29,9 @@ type UserRole {
   id: Int!
   role: String!
   users: [User!]!
+}
+
+enum UserRoleValue {
+  Administrator
+  User
 }

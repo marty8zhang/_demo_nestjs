@@ -1,21 +1,25 @@
 import {
   Args,
   Int,
+  Mutation,
   Parent,
   Query,
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
+import { UpdateUserInput } from './update-user.input';
 import { UsersService } from './users.service';
 import { UserRolesService } from './user-roles.service';
 import { User } from './entities/user.entity';
 import { UserRole } from './entities/user-role.entity';
+import { UserRoleTranslator } from './translators/user-role.translator';
 
 @Resolver(() => User)
 export class UsersResolver {
   constructor(
-    private usersService: UsersService,
-    private userRolesService: UserRolesService,
+    private readonly usersService: UsersService,
+    private readonly userRolesService: UserRolesService,
+    private readonly userRoleTranslator: UserRoleTranslator,
   ) {}
 
   @Query(() => User, { name: 'user' })
@@ -25,6 +29,21 @@ export class UsersResolver {
 
   @ResolveField('roles', () => [UserRole])
   async getUserRoles(@Parent() user: User) {
-    return await this.userRolesService.findAllByUserId(user.id);
+    return this.userRolesService.findAllByUserId(user.id);
+  }
+
+  @Mutation(() => User)
+  async updateUser(@Args('updateUserData') updateUserData: UpdateUserInput) {
+    const { id, roles, ...userData } = updateUserData;
+    const clonedUserData: Partial<User> = Object.assign({}, userData);
+    if (roles) {
+      clonedUserData.roles = await Promise.all(
+        roles.map(async (value) =>
+          this.userRoleTranslator.valueToObject(value),
+        ),
+      );
+    }
+
+    return this.usersService.update(id, clonedUserData);
   }
 }
