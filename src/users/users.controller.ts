@@ -1,5 +1,4 @@
 import {
-  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -15,13 +14,13 @@ import { CurrentUser } from './entities/current-user.entity';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
-import { UserRolesService } from './user-roles.service';
+import { UserRoleTranslator } from './translators/user-role.translator';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
-    private readonly userRolesService: UserRolesService,
+    private readonly userRoleTranslator: UserRoleTranslator,
   ) {}
 
   @Post()
@@ -38,14 +37,9 @@ export class UsersController {
     user.firstName = createUserDto.firstName;
     user.lastName = createUserDto.lastName;
     user.roles = await Promise.all(
-      createUserDto.roles.map(async (value) => {
-        const userRole = await this.userRolesService.findOneByRole(value);
-        if (!userRole) {
-          throw new BadRequestException();
-        }
-
-        return userRole;
-      }),
+      createUserDto.roles.map(async (value) =>
+        this.userRoleTranslator.valueToObject(value),
+      ),
     );
 
     const { password, ...userData } = await this.usersService.create(user);

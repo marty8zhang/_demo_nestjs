@@ -32,7 +32,7 @@ export class User {
   @Column()
   firstName: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   lastName?: string;
 

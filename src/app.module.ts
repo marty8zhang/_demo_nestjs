@@ -121,6 +121,7 @@ export class AppModule implements NestModule {
       .exclude(
         { path: 'authentication/sign-in', method: RequestMethod.POST },
         { path: 'test-base-exception-filter', method: RequestMethod.GET },
+        { path: 'graphql', method: RequestMethod.GET },
       )
       .forRoutes('/');
   }

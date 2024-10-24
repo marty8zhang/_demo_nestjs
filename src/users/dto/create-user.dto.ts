@@ -24,7 +24,7 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsString()
-  lastName: string;
+  lastName?: string;
 
   @IsEnum(UserRoleValue, { each: true })
   @ArrayUnique()
