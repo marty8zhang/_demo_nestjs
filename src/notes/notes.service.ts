@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Note, NoteDocument } from './entities/note.entity';
 import { Model } from 'mongoose';
+
+import { Note, NoteDocument } from './entities/note.entity';
 
 @Injectable()
 export class NotesService {

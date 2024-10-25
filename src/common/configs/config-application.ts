@@ -1,10 +1,11 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
-import { BaseExceptionFilter } from '../exceptions/filters/base-exception.filter';
+// import { ConfigService } from '@nestjs/config';
 import { HttpAdapterHost } from '@nestjs/core';
+import mongoose from 'mongoose';
+
+import { BaseExceptionFilter } from '../exceptions/filters/base-exception.filter';
 import { HttpExceptionFilter } from '../exceptions/filters/http-exception.filter';
 import { ExecutionTimeLoggerInterceptor } from '../interceptors/execution-time-logger.interceptor';
-import mongoose from 'mongoose';
-// import { ConfigService } from '@nestjs/config';
 
 export function configApplication(app: INestApplication): INestApplication {
   app.useGlobalFilters(

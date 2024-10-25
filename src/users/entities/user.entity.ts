@@ -1,3 +1,4 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import {
   Column,
   Entity,
@@ -6,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
   // Unique,
 } from 'typeorm';
+
 import { UserRole } from './user-role.entity';
-import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 @Entity()

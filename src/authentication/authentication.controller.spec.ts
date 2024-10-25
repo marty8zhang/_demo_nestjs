@@ -1,8 +1,9 @@
+import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { UsersService } from '../users/users.service';
 import { AuthenticationController } from './authentication.controller';
 import { AuthenticationService } from './authentication.service';
-import { UsersService } from '../users/users.service';
-import { JwtService } from '@nestjs/jwt';
 
 describe('AuthenticationController', () => {
   let controller: AuthenticationController;

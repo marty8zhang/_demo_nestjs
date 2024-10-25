@@ -1,10 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from '../src/app.module';
-import { JwtService } from '@nestjs/jwt';
-import { BaseExceptionFilter } from '../src/common/exceptions/filters/base-exception.filter';
 import { HttpAdapterHost } from '@nestjs/core';
+import { JwtService } from '@nestjs/jwt';
+import { Test, TestingModule } from '@nestjs/testing';
+import * as request from 'supertest';
+
+import { AppModule } from '../src/app.module';
+import { BaseExceptionFilter } from '../src/common/exceptions/filters/base-exception.filter';
 import { HttpExceptionFilter } from '../src/common/exceptions/filters/http-exception.filter';
 
 describe('AppController (E2E)', () => {

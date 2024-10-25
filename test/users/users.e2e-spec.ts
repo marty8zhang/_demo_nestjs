@@ -1,12 +1,13 @@
-import TestAgent from 'supertest/lib/agent';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import * as request from 'supertest';
+import TestAgent from 'supertest/lib/agent';
+import { Repository } from 'typeorm';
+
 import { AppModule } from '../../src/app.module';
 import { configApplication } from '../../src/common/configs/config-application';
-import * as request from 'supertest';
-import { Repository } from 'typeorm';
 import { User } from '../../src/users/entities/user.entity';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserRole } from '../../src/users/entities/user-role.entity';
 import { userRoleFixtures } from './fixtures/database/user-role-fixtures';
 

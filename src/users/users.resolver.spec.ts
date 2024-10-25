@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { UserRoleTranslator } from './translators/user-role.translator';
+import { UserRolesService } from './user-roles.service';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
-import { UserRolesService } from './user-roles.service';
-import { UserRoleTranslator } from './translators/user-role.translator';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;

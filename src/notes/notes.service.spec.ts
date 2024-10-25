@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { NotesService } from './notes.service';
 import { getModelToken } from '@nestjs/mongoose';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { Note } from './entities/note.entity';
+import { NotesService } from './notes.service';
 
 describe('NotesService', () => {
   let service: NotesService;

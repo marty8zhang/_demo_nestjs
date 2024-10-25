@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
+
 import { UserRoleValue } from './entities/user-role.entity';
 
 registerEnumType(UserRoleValue, {

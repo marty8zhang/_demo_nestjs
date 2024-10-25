@@ -9,12 +9,13 @@ import {
   ParseIntPipe,
   Post,
 } from '@nestjs/common';
+
 import { CurrentUserData } from '../common/decorators/current-user-data.decorator';
-import { CurrentUser } from './entities/current-user.entity';
-import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { CurrentUser } from './entities/current-user.entity';
 import { User } from './entities/user.entity';
 import { UserRoleTranslator } from './translators/user-role.translator';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {

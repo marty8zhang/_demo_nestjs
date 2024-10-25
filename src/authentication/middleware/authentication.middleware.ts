@@ -3,10 +3,11 @@ import {
   NestMiddleware,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { NextFunction, Request, Response } from 'express';
+
 import { CurrentUser } from '../../users/entities/current-user.entity';
-import { ConfigService } from '@nestjs/config';
 
 export interface RequestWithCurrentUser extends Request {
   currentUser: CurrentUser;

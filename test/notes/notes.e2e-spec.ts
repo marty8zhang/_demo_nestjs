@@ -1,11 +1,12 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppModule } from '../../src/app.module';
+import { Model } from 'mongoose';
 import * as request from 'supertest';
 import TestAgent from 'supertest/lib/agent';
-import { NoteDocument, Note } from '../../src/notes/entities/note.entity';
-import { Model } from 'mongoose';
+
+import { AppModule } from '../../src/app.module';
 import { configApplication } from '../../src/common/configs/config-application';
+import { Note, NoteDocument } from '../../src/notes/entities/note.entity';
 
 /*
  * Bypass authentication. Check out `app.e2e-spec.ts` if testing the behaviours

@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { Note } from './entities/note.entity';
 import { NotesController } from './notes.controller';
 import { NotesService } from './notes.service';
-import { Note } from './entities/note.entity';
 
 describe('NotesController', () => {
   const notesServiceFindOneById = jest.fn();

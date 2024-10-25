@@ -1,32 +1,35 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-  HttpStatus,
-  Query,
+  Controller,
   DefaultValuePipe,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
   ParseBoolPipe,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query,
+  // UseFilters,
   UseInterceptors,
   // UsePipes,
-  // UseFilters,
 } from '@nestjs/common';
+
+import { AnimalsService } from '../animals/animals.service';
+// import { HttpExceptionFilter } from '../common/exceptions/filters/http-exception.filter';
+import { CachingInterceptor } from '../common/interceptors/caching.interceptor';
+import { ResponseMappingInterceptor } from '../common/interceptors/response-mapping.interceptor';
+import { SchemaValidationPipe } from '../common/pipes/schema-validation.pipe';
 import { CatsService } from './cats.service';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto, updateCatSchema } from './dto/update-cat.dto';
-import { AnimalsService } from '../animals/animals.service';
-import { SchemaValidationPipe } from '../common/pipes/schema-validation.pipe';
-import { ResponseMappingInterceptor } from '../common/interceptors/response-mapping.interceptor';
-import { CachingInterceptor } from '../common/interceptors/caching.interceptor';
-// import { HttpExceptionFilter } from '../common/exceptions/filters/http-exception.filter';
 
 @Controller('cats')
-// Apply exception filter(s) in the controller scope.
-// @UseFilters(HttpExceptionFilter, ...)
+/*
+ * Apply exception filter(s) in the controller scope.
+ * @UseFilters(HttpExceptionFilter, ...)
+ */
 export class CatsController {
   constructor(
     private readonly catsService: CatsService,
@@ -40,8 +43,8 @@ export class CatsController {
 
   /*
    * Apply exception filter(s) in the method scope.
+   * @UseFilters(HttpExceptionFilter, ...)
    */
-  // @UseFilters(HttpExceptionFilter, ...)
   @Get()
   findAll() {
     return this.catsService.findAll();

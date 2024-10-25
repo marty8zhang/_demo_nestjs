@@ -1,6 +1,7 @@
+import { Injectable } from '@nestjs/common';
+
 import { UserRole, UserRoleValue } from '../entities/user-role.entity';
 import { UserRolesService } from '../user-roles.service';
-import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class UserRoleTranslator {

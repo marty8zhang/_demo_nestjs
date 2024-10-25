@@ -1,27 +1,28 @@
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import {
   MiddlewareConsumer,
   Module,
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+// import { APP_FILTER } from '@nestjs/core';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { join } from 'path';
+
+import { AnimalsModule } from './animals/animals.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthenticationModule } from './authentication/authentication.module';
+import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
 import { CatsModule } from './cats/cats.module';
-import { AnimalsModule } from './animals/animals.module';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
-// import { APP_FILTER } from '@nestjs/core';
 // import { BaseExceptionFilter } from './common/exceptions/filters/base-exception.filter';
 // import { HttpExceptionFilter } from './common/exceptions/filters/http-exception.filter';
-import { AuthenticationModule } from './authentication/authentication.module';
-import { UsersModule } from './users/users.module';
-import { AuthenticationMiddleware } from './authentication/middleware/authentication.middleware';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { MongooseModule } from '@nestjs/mongoose';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { NotesModule } from './notes/notes.module';
-import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
+import { UsersModule } from './users/users.module';
 
 const ENV = process.env.NODE_ENV;
 
